@@ -1,4 +1,4 @@
-# DhanSetu 🏦
+# DhanSetu
 
 **AI Concierge Platform for The Economic Times Ecosystem**
 
@@ -19,6 +19,15 @@ DhanSetu transforms a cold, anonymous ET visitor into a fully profiled, goal-map
 All of this happens **automatically, in the background**, while the user reads their first response.
 
 ---
+<img width="1470" height="825" alt="Screenshot 2026-03-28 at 21 49 47" src="https://github.com/user-attachments/assets/a2270307-0838-4dc8-bf7e-5c8a813ad8e1" />
+
+
+
+
+
+
+
+<img width="1470" height="833" alt="Screenshot 2026-03-28 at 21 50 01" src="https://github.com/user-attachments/assets/38cef0a2-6493-41bc-8f92-e2fffd4087bb" />
 
 ## Pages
 

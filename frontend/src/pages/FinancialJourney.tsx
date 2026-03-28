@@ -1,11 +1,42 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Target, CheckCircle, Circle, ArrowRight, TrendingUp, Home, BookOpen, Plane, Shield, Briefcase } from 'lucide-react';
+import { Target, CheckCircle, Circle, ArrowRight, TrendingUp, Home, BookOpen, Plane, Shield, Briefcase, ExternalLink } from 'lucide-react';
 import { Header } from '../components/layout/Header.js';
 import { Card } from '../components/shared/Card.js';
 import { marketplaceAPI } from '../services/api.js';
 import { useAppStore } from '../store/useAppStore.js';
 import type { FinancialGoal } from '../types/index.js';
+
+// Map suggested product names to ET URLs
+const PRODUCT_URLS: Record<string, string> = {
+  'ET Money Direct Funds': 'https://www.etmoney.com/mutual-funds',
+  'Mirae Asset Large Cap': 'https://www.etmoney.com/mutual-funds/mirae-asset-large-cap-fund/16190',
+  'Parag Parikh Flexi Cap': 'https://www.etmoney.com/mutual-funds/parag-parikh-flexi-cap-fund/21028',
+  'HDFC Index Fund Nifty 50': 'https://www.etmoney.com/mutual-funds/index-funds',
+  'SBI Liquid Fund': 'https://www.etmoney.com/mutual-funds/liquid-funds',
+  'Paytm Money Liquid': 'https://www.etmoney.com/mutual-funds/liquid-funds',
+  'High-interest Savings Account': 'https://economictimes.indiatimes.com/wealth/save',
+  'NPS via ET Money': 'https://www.etmoney.com/nps',
+  'PPF Account': 'https://economictimes.indiatimes.com/wealth/tax/ppf',
+  'HDFC Retirement Fund': 'https://www.etmoney.com/mutual-funds',
+  'SBI Retirement Benefit Fund': 'https://www.etmoney.com/mutual-funds',
+  'ET Money Home Loan Comparison': 'https://economictimes.indiatimes.com/wealth/borrow/home-loan',
+  'Bank RD': 'https://economictimes.indiatimes.com/wealth/save/recurring-deposit',
+  'HDFC Home Loan': 'https://economictimes.indiatimes.com/wealth/borrow/home-loan',
+  'SBI MaxGain Home Loan': 'https://economictimes.indiatimes.com/wealth/borrow/home-loan',
+  'Axis Long Term Equity Fund': 'https://www.etmoney.com/mutual-funds/elss-tax-saving-funds',
+  'Education Loan via ET': 'https://economictimes.indiatimes.com/wealth/borrow/education-loan',
+  'Ultra Short Term Debt Fund': 'https://www.etmoney.com/mutual-funds/ultra-short-duration-funds',
+  'FD Laddering': 'https://www.etmoney.com/fixed-deposit',
+  'Conservative Hybrid Fund': 'https://www.etmoney.com/mutual-funds/hybrid-funds',
+  'Gold ETF (5–10% hedge)': 'https://economictimes.indiatimes.com/markets/gold',
+  'RD': 'https://economictimes.indiatimes.com/wealth/save/recurring-deposit',
+  'Travel Credit Card with rewards': 'https://economictimes.indiatimes.com/wealth/borrow/credit-card',
+};
+
+function getProductUrl(product: string): string {
+  return PRODUCT_URLS[product] || 'https://www.etmoney.com';
+}
 
 const CATEGORY_CONFIG: Record<string, { icon: React.ElementType; color: string; bg: string }> = {
   retirement: { icon: Briefcase, color: 'text-purple-400', bg: 'bg-purple-400/10' },
@@ -121,19 +152,38 @@ function GoalCard({ goal }: { goal: FinancialGoal }) {
         </div>
       )}
 
-      {/* Suggested products */}
+      {/* Suggested products — clickable */}
       {goal.suggestedProducts && goal.suggestedProducts.length > 0 && (
         <div className="mt-4 pt-4 border-t border-white/5">
           <p className="text-xs text-white/30 mb-2">Suggested Products</p>
           <div className="flex flex-wrap gap-1.5">
             {goal.suggestedProducts.map(p => (
-              <span key={p} className="text-xs px-2 py-0.5 rounded-full bg-et-orange/10 text-et-orange/70 border border-et-orange/20">
+              <a
+                key={p}
+                href={getProductUrl(p)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs px-2 py-0.5 rounded-full bg-et-orange/10 text-et-orange/80 border border-et-orange/20 hover:bg-et-orange hover:text-white transition-all cursor-pointer"
+              >
                 {p}
-              </span>
+              </a>
             ))}
           </div>
         </div>
       )}
+
+      {/* Start Goal CTA */}
+      <div className="mt-4 pt-3 border-t border-white/5">
+        <a
+          href={goal.suggestedProducts?.[0] ? getProductUrl(goal.suggestedProducts[0]) : 'https://www.etmoney.com'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full py-2.5 rounded-xl bg-et-orange/10 border border-et-orange/30 text-et-orange text-sm font-medium hover:bg-et-orange hover:text-white transition-all flex items-center justify-center gap-2"
+        >
+          {goal.status === 'not_started' ? 'Start this Goal' : goal.status === 'in_progress' ? 'Continue Journey' : 'View Details'}
+          <ExternalLink className="w-3.5 h-3.5" />
+        </a>
+      </div>
     </motion.div>
   );
 }

@@ -90,7 +90,20 @@ function RecommendationCard({ rec, onInteract }: { rec: Recommendation; onIntera
               Why this?
             </button>
             <span className="text-white/20">·</span>
-            <span className="text-xs text-et-orange font-medium">{rec.ctaText || 'Learn More'}</span>
+            {rec.ctaUrl ? (
+              <a
+                href={rec.ctaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                className="text-xs text-et-orange font-medium hover:text-et-orange-light hover:underline flex items-center gap-0.5 transition-colors"
+              >
+                {rec.ctaText || 'Learn More'}
+                <ArrowRight className="w-3 h-3" />
+              </a>
+            ) : (
+              <span className="text-xs text-et-orange font-medium">{rec.ctaText || 'Learn More'}</span>
+            )}
           </div>
         </div>
       </div>

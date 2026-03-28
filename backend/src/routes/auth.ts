@@ -43,10 +43,18 @@ router.post('/login', (req: Request, res: Response) => {
 });
 
 router.get('/me', authMiddleware, (req: AuthRequest, res: Response) => {
-  const user = db.getUserById(req.userId!);
+  let user = db.getUserById(req.userId!);
+
+  // After server restart, user is gone from memory — recreate a shell record
   if (!user) {
-    res.status(404).json({ error: 'User not found' });
-    return;
+    user = db.createUserWithId(req.userId!, {
+      email: `user_${req.userId!.slice(0, 8)}@dhansetu.app`,
+      name: 'User',
+      onboardingComplete: false,
+    });
+    const newSession = db.createSession(user.id);
+    const { initWorkflowState } = require('../workflow/engine');
+    initWorkflowState(newSession.id, user.id);
   }
 
   const profile = db.getProfile(user.id);

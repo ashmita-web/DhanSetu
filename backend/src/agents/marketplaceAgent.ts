@@ -3,7 +3,10 @@ import db from '../database/store';
 
 // ─── ET Ecosystem Services Catalogue ─────────────────────────────────────────
 
-const ET_SERVICES: ETService[] = [
+// Extend ETService locally with a url field for navigation
+type ETServiceWithUrl = ETService & { url: string };
+
+const ET_SERVICES: ETServiceWithUrl[] = [
   {
     id: 'etm-sip-001',
     name: 'ET Money — SIP Investment Platform',
@@ -16,6 +19,7 @@ const ET_SERVICES: ETService[] = [
     returns: '12–18% p.a. (equity, 5yr avg)',
     tags: ['mutual_funds', 'sip', 'direct', 'zero_commission'],
     matchScore: 0,
+    url: 'https://www.etmoney.com/mutual-funds',
   },
   {
     id: 'etm-insurance-001',
@@ -27,6 +31,7 @@ const ET_SERVICES: ETService[] = [
     rating: 4.5,
     tags: ['insurance', 'term', 'health', 'comparison'],
     matchScore: 0,
+    url: 'https://www.etmoney.com/insurance',
   },
   {
     id: 'et-homeloan-001',
@@ -38,6 +43,7 @@ const ET_SERVICES: ETService[] = [
     rating: 4.3,
     tags: ['home_loan', 'property', 'loan', 'comparison'],
     matchScore: 0,
+    url: 'https://economictimes.indiatimes.com/wealth/borrow/home-loan',
   },
   {
     id: 'et-demat-001',
@@ -49,6 +55,7 @@ const ET_SERVICES: ETService[] = [
     rating: 4.4,
     tags: ['demat', 'trading', 'stocks', 'equity'],
     matchScore: 0,
+    url: 'https://economictimes.indiatimes.com/markets/stocks',
   },
   {
     id: 'et-nps-001',
@@ -62,6 +69,7 @@ const ET_SERVICES: ETService[] = [
     returns: '10–12% p.a. (equity tier, 10yr avg)',
     tags: ['nps', 'pension', 'tax_saving', 'retirement'],
     matchScore: 0,
+    url: 'https://www.etmoney.com/nps',
   },
   {
     id: 'et-fd-001',
@@ -75,6 +83,7 @@ const ET_SERVICES: ETService[] = [
     returns: '7.5–8.75% p.a.',
     tags: ['fd', 'fixed_deposit', 'safe', 'nbfc'],
     matchScore: 0,
+    url: 'https://www.etmoney.com/fixed-deposit',
   },
   {
     id: 'et-creditcard-001',
@@ -86,6 +95,7 @@ const ET_SERVICES: ETService[] = [
     rating: 4.2,
     tags: ['credit_card', 'cashback', 'rewards', 'travel'],
     matchScore: 0,
+    url: 'https://economictimes.indiatimes.com/wealth/borrow/credit-card',
   },
   {
     id: 'et-stocks-001',
@@ -97,6 +107,7 @@ const ET_SERVICES: ETService[] = [
     rating: 4.6,
     tags: ['stocks', 'screener', 'research', 'equity'],
     matchScore: 0,
+    url: 'https://economictimes.indiatimes.com/markets/stocks/etmarkets-screener',
   },
 ];
 
@@ -137,7 +148,7 @@ function scoreService(service: ETService, profile: Partial<UserProfile>): number
 export async function runMarketplaceAgent(
   state: WorkflowState,
   profile: Partial<UserProfile>
-): Promise<ETService[]> {
+): Promise<ETServiceWithUrl[]> {
   const startTime = Date.now();
 
   const scored = ET_SERVICES.map(service => ({

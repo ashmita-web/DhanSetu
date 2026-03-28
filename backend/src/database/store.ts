@@ -32,6 +32,17 @@ class InMemoryStore {
     return this.users.get(id);
   }
 
+  createUserWithId(id: string, data: Omit<User, 'id' | 'createdAt' | 'lastActive'>): User {
+    const user: User = {
+      id,
+      createdAt: new Date().toISOString(),
+      lastActive: new Date().toISOString(),
+      ...data,
+    };
+    this.users.set(id, user);
+    return user;
+  }
+
   getUserByEmail(email: string): User | undefined {
     return Array.from(this.users.values()).find(u => u.email === email);
   }
@@ -108,8 +119,20 @@ class InMemoryStore {
   }
 
   addMessage(sessionId: string, message: Omit<Message, 'id' | 'sessionId' | 'timestamp'>): Message {
-    const session = this.sessions.get(sessionId);
-    if (!session) throw new Error('Session not found');
+    let session = this.sessions.get(sessionId);
+    if (!session) {
+      // Session missing (e.g. server restarted) — recreate it silently
+      session = {
+        id: sessionId,
+        userId: '',
+        messages: [],
+        status: 'active',
+        workflowStage: 'profiling',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      this.sessions.set(sessionId, session);
+    }
     const msg: Message = {
       id: uuidv4(),
       sessionId,

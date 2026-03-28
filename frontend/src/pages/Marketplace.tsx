@@ -24,7 +24,9 @@ function BarChart({ className }: { className?: string }) {
   );
 }
 
-function ServiceCard({ service }: { service: ETService }) {
+type ETServiceWithUrl = ETService & { url?: string };
+
+function ServiceCard({ service }: { service: ETServiceWithUrl }) {
   const Icon = CATEGORY_ICON[service.category] || ShoppingBag;
   const matchPct = service.matchScore || 70;
 
@@ -79,15 +81,26 @@ function ServiceCard({ service }: { service: ETService }) {
         ))}
       </div>
 
-      <button className="w-full py-2.5 rounded-xl bg-et-orange/10 border border-et-orange/30 text-et-orange text-sm font-medium hover:bg-et-orange hover:text-white transition-all flex items-center justify-center gap-2">
-        Explore Service <ArrowRight className="w-4 h-4" />
-      </button>
+      {service.url ? (
+        <a
+          href={service.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full py-2.5 rounded-xl bg-et-orange/10 border border-et-orange/30 text-et-orange text-sm font-medium hover:bg-et-orange hover:text-white transition-all flex items-center justify-center gap-2"
+        >
+          Explore Service <ArrowRight className="w-4 h-4" />
+        </a>
+      ) : (
+        <button className="w-full py-2.5 rounded-xl bg-et-orange/10 border border-et-orange/30 text-et-orange text-sm font-medium hover:bg-et-orange hover:text-white transition-all flex items-center justify-center gap-2">
+          Explore Service <ArrowRight className="w-4 h-4" />
+        </button>
+      )}
     </motion.div>
   );
 }
 
 export default function Marketplace() {
-  const [services, setServices] = useState<ETService[]>([]);
+  const [services, setServices] = useState<ETServiceWithUrl[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

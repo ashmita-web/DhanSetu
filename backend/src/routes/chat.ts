@@ -18,7 +18,9 @@ export function createChatRouter(io: SocketServer) {
 
     let activeSessionId = sessionId;
 
-    if (!activeSessionId) {
+    // Resolve session — handle stale IDs from localStorage after server restart
+    if (!activeSessionId || !db.getSession(activeSessionId)) {
+      // Try to find an existing live session for this user first
       const existingSession = db.getLatestUserSession(userId);
       if (existingSession) {
         activeSessionId = existingSession.id;

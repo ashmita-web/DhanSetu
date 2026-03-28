@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(chmod +x /Users/ashmitaluthra/Documents/DhanSetu/start.sh)",
+      "Bash(curl -s http://localhost:3001/health)",
+      "Bash(lsof -ti:3001)",
+      "Bash(xargs kill:*)",
+      "Bash(node -e \":*)"
+    ]
+  }
+}

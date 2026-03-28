@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    @apply bg-et-navy text-white font-sans;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-et-navy;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-et-navy-card rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-et-orange opacity-70;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-et-navy-card border border-white/10 rounded-2xl backdrop-blur-sm;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-et-orange to-et-gold bg-clip-text text-transparent;
+  }
+
+  .et-button {
+    @apply bg-et-orange hover:bg-et-orange-dark text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 active:scale-95;
+  }
+
+  .et-button-ghost {
+    @apply border border-et-orange text-et-orange hover:bg-et-orange hover:text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200;
+  }
+
+  .typing-dot {
+    @apply w-2 h-2 rounded-full bg-et-orange inline-block mx-0.5;
+    animation: typingBounce 1.4s infinite ease-in-out;
+  }
+
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  .agent-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  .metric-card {
+    @apply glass-card p-5 flex flex-col gap-2;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes typingBounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.03) 25%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Chat message styles */
+.chat-message-user {
+  @apply bg-et-orange text-white rounded-2xl rounded-tr-sm px-4 py-3 max-w-xs ml-auto;
+}
+
+.chat-message-assistant {
+  @apply bg-et-navy-card border border-white/10 text-white rounded-2xl rounded-tl-sm px-4 py-3 max-w-sm;
+}
+
+/* Progress bar animation */
+@keyframes progressFill {
+  from { width: 0; }
+}
+
+.progress-fill {
+  animation: progressFill 1s ease-out forwards;
+}
+
+/* Glow effect */
+.glow-orange {
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+}
+
+.glow-teal {
+  box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
+}

@@ -2,7 +2,7 @@
 
 **AI Concierge Platform for The Economic Times Ecosystem**
 
-DhanSetu transforms a cold, anonymous ET visitor into a fully profiled, goal-mapped, product-served financial user — in a single 3-minute conversation. It runs a 7-agent autonomous pipeline, and works completely offline.
+DhanSetu transforms a cold, anonymous ET visitor into a fully profiled, goal-mapped, product-served financial user in a single 3-minute conversation. It runs a 7-agent autonomous pipeline, and works completely offline.
 
 ---
 
@@ -20,8 +20,6 @@ All of this happens **automatically, in the background**, while the user reads t
 
 ---
 <img width="1470" height="825" alt="Screenshot 2026-03-28 at 21 49 47" src="https://github.com/user-attachments/assets/a2270307-0838-4dc8-bf7e-5c8a813ad8e1" />
-
-
 
 
 
